@@ -10,20 +10,12 @@
 
 <body>
   <div id="app">
-    <input type="text" v-model="name">
-    <p>Your lowercased name is: {{ name | uppercase }}</p>
-
     <h2>Cuales son tus cursos favoritos?</h2>
     <form @submit.prevent="submit" action="" method="">
-      <input v-model="courses" type="checkbox" id="vue" value="Vue.js">
-      <label for="vue">Curso de Vue.js</label>
-      <input v-model="courses" type="checkbox" id="nodejs" value="Node.js">
-      <label for="nodejs">Curso de Node.js</label>
-      <input v-model="courses" type="checkbox" id="django" value="Django">
-      <label for="django">Curso de Django</label>
-      <input v-model="courses" type="checkbox" id="react" value="React.js">
-      <label for="react">Curso de React.js</label>
-
+      <template v-for="course in courses">
+          <input v-model="favorites" type="checkbox" :id="course.value" :value="course.value">
+          <label :for="course.value">{{ course.name }}</label>
+      </template>
       <button type="submit">Enviar</button>
     </form>
   </div>
@@ -34,16 +26,29 @@
       el: '#app',
       data: {
         name: '',
-        courses: []
-      },
-      filters: {
-        uppercase: function (str) {
-          return str.toUpperCase()
-        }
+        courses: [
+          { 
+            name: 'Curso de Vue.js',
+            value: 'vue'
+          },
+          { 
+            name: 'Curso de Node.js',
+            value: 'nodejs'
+          },
+          { 
+            name: 'Curso de Django',
+            value: 'django'
+          },
+          { 
+            name: 'Curso de React.js',
+            value: 'reactjs'
+          }
+        ],
+        favorites: []
       },
       methods: {
         submit: function () {
-          console.log(`Your selected courses was: ${this.courses}`)
+          console.log(`Your selected courses was: ${this.favorites}`)
         }
       }
     })
