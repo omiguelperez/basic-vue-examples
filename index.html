@@ -5,22 +5,27 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <title>Vue: Hello World!</title>
+  <title>Vue Basic course</title>
 </head>
 
 <body>
   <div id="app">
-    <!-- Do not render template tag, and destroy elements from DOM with v-if -->
-    <template v-if="show">
-        <h1>{{ title | uppercase }}</h1>
-        <h3>{{ subtitle | lowercase }}</h3>
-        <p>Hello {{ name }}</p>
-        <a :href="url" target="_blank">Go to {{ page }}</a>
-    </template>
-    <!-- Toggle visibility with css display none -->
-    <div v-show="!show">
-      <p>This is a hidden text!</p>
-    </div>
+    <input type="text" v-model="name">
+    <p>Your lowercased name is: {{ name | uppercase }}</p>
+
+    <h2>Cuales son tus cursos favoritos?</h2>
+    <form @submit.prevent="submit" action="" method="">
+      <input v-model="courses" type="checkbox" id="vue" value="Vue.js">
+      <label for="vue">Curso de Vue.js</label>
+      <input v-model="courses" type="checkbox" id="nodejs" value="Node.js">
+      <label for="nodejs">Curso de Node.js</label>
+      <input v-model="courses" type="checkbox" id="django" value="Django">
+      <label for="django">Curso de Django</label>
+      <input v-model="courses" type="checkbox" id="react" value="React.js">
+      <label for="react">Curso de React.js</label>
+
+      <button type="submit">Enviar</button>
+    </form>
   </div>
 
   <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
@@ -28,16 +33,18 @@
     const app = new Vue({
       el: '#app',
       data: {
-        name: '@omiguelperez',
-        url: 'https://google.com',
-        page: 'Google',
-        show: true,
-        title: 'This is the title',
-        subtitle: 'This is a subtitle'
+        name: '',
+        courses: []
       },
       filters: {
-        uppercase: str => str.toUpperCase(),
-        lowercase: str => str.toLowerCase()
+        uppercase: function (str) {
+          return str.toUpperCase()
+        }
+      },
+      methods: {
+        submit: function () {
+          console.log(`Your selected courses was: ${this.courses}`)
+        }
       }
     })
   </script>
