@@ -12,8 +12,8 @@
   <div id="app">
     <!-- Do not render template tag, and destroy elements from DOM with v-if -->
     <template v-if="show">
-        <h1>This is the title</h1>
-        <h3>This is a subtitle</h3>
+        <h1>{{ title | uppercase }}</h1>
+        <h3>{{ subtitle | lowercase }}</h3>
         <p>Hello {{ name }}</p>
         <a :href="url" target="_blank">Go to {{ page }}</a>
     </template>
@@ -31,7 +31,13 @@
         name: '@omiguelperez',
         url: 'https://google.com',
         page: 'Google',
-        show: true
+        show: true,
+        title: 'This is the title',
+        subtitle: 'This is a subtitle'
+      },
+      filters: {
+        uppercase: str => str.toUpperCase(),
+        lowercase: str => str.toLowerCase()
       }
     })
   </script>
