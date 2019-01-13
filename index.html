@@ -13,8 +13,7 @@
     <h2>Cuales son tus cursos favoritos?</h2>
     <form @submit.prevent="submit" action="" method="">
       <template v-for="course in courses">
-          <input v-model="favorites" type="checkbox" :id="course.value" :value="course.value">
-          <label :for="course.value">{{ course.name }}</label>
+          <course :course="course" @checked="toggleCourse"></course>
       </template>
       <button type="submit">Enviar</button>
     </form>
@@ -22,6 +21,21 @@
 
   <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
   <script>
+    Vue.component('course', {
+      props: ['course'],
+      template: `
+        <div>
+            <input type="checkbox" :id="course.value" :value="course.value" @change="selectCourse">
+            <label :for="course.value">{{ course.name }}</label>
+        </div>
+      `,
+      methods: {
+        selectCourse: function (e) {
+          this.$emit('checked', this.course, e.target.checked)
+        }
+      }
+    })
+
     const app = new Vue({
       el: '#app',
       data: {
@@ -49,6 +63,14 @@
       methods: {
         submit: function () {
           console.log(`Your selected courses was: ${this.favorites}`)
+        },
+        toggleCourse: function (course, checked) {
+          if (checked) {
+            this.favorites.push(course.value)
+          } else {
+            let index = this.favorites.indexOf(course.value)
+            this.favorites.splice(index, 1)
+          }
         }
       }
     })
