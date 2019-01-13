@@ -10,8 +10,17 @@
 
 <body>
   <div id="app">
-    <p>Hello {{ name }}</p>
-    <a :href="url" target="_blank">Go to {{ page }}</a>
+    <!-- Do not render template tag, and destroy elements from DOM with v-if -->
+    <template v-if="show">
+        <h1>This is the title</h1>
+        <h3>This is a subtitle</h3>
+        <p>Hello {{ name }}</p>
+        <a :href="url" target="_blank">Go to {{ page }}</a>
+    </template>
+    <!-- Toggle visibility with css display none -->
+    <div v-show="!show">
+      <p>This is a hidden text!</p>
+    </div>
   </div>
 
   <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
@@ -21,7 +30,8 @@
       data: {
         name: '@omiguelperez',
         url: 'https://google.com',
-        page: 'Google'
+        page: 'Google',
+        show: true
       }
     })
   </script>
